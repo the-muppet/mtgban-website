@@ -120,7 +120,7 @@ var OptionalFields = []string{
 }
 
 var OrderNav = []string{
-	"Search", "Newspaper", "Explore", "Sleepers", "Arbit",
+	"Search", "Newspaper", "Explore", "Sleepers", "Deals", "Arbit",
 }
 
 var ExtraNavs = map[string]NavElem{
@@ -143,6 +143,11 @@ var ExtraNavs = map[string]NavElem{
 		Name:  "💤 Sleepers",
 		Short: "💤",
 		Link:  "/sleepers",
+	},
+	"Deals": NavElem{
+		Name:  "🤝 Deals",
+		Short: "🤝",
+		Link:  "/deals",
 	},
 	"Arbit": NavElem{
 		Name:  "📈 Arbitrage",
@@ -413,6 +418,7 @@ func main() {
 	http.Handle("/newspaper", enforceSigning(http.HandlerFunc(Newspaper)))
 	http.Handle("/explore", enforceSigning(http.HandlerFunc(Explore)))
 	http.Handle("/sleepers", enforceSigning(http.HandlerFunc(Sleepers)))
+	http.Handle("/deals", enforceSigning(http.HandlerFunc(Deals)))
 	http.Handle("/arbit", enforceSigning(http.HandlerFunc(Arbit)))
 	http.Handle("/api/mtgjson/ck.json", enforceAPISigning(http.HandlerFunc(API)))
 	http.HandleFunc("/favicon.ico", Favicon)
