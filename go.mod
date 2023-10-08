@@ -3,8 +3,8 @@ module github.com/kodabb/mtgban-website
 go 1.19
 
 require (
-	cloud.google.com/go/bigquery v1.50.0
-	cloud.google.com/go/storage v1.29.0
+	cloud.google.com/go/bigquery v1.55.0
+	cloud.google.com/go/storage v1.30.1
 	github.com/NYTimes/gziphandler v1.1.1
 	github.com/PuerkitoBio/goquery v1.6.1
 	github.com/bwmarrin/discordgo v0.23.2
@@ -18,19 +18,20 @@ require (
 	github.com/mtgban/go-mtgban v0.0.0-20231006011621-ccc1a1661180
 	github.com/xuri/excelize/v2 v2.7.0
 	golang.org/x/exp v0.0.0-20230522175609-2e198f4a06a1
-	golang.org/x/oauth2 v0.7.0
-	golang.org/x/sys v0.10.0
+	golang.org/x/oauth2 v0.13.0
+	golang.org/x/sys v0.13.0
 	golang.org/x/time v0.0.0-20200630173020-3af7569d3a1e
-	google.golang.org/api v0.114.0
+	google.golang.org/api v0.145.0
 	gopkg.in/Iwark/spreadsheet.v2 v2.0.0-20191122095212-08231195c43b
 	gopkg.in/robfig/cron.v2 v2.0.0-20150107220207-be2e0b0deed5
 )
 
 require (
-	cloud.google.com/go v0.110.0 // indirect
-	cloud.google.com/go/compute v1.19.1 // indirect
+	cloud.google.com/go v0.110.8 // indirect
+	cloud.google.com/go/compute v1.23.0 // indirect
 	cloud.google.com/go/compute/metadata v0.2.3 // indirect
-	cloud.google.com/go/iam v0.13.0 // indirect
+	cloud.google.com/go/iam v1.1.2 // indirect
+	cloud.google.com/go/secretmanager v1.11.1 // indirect
 	github.com/andybalholm/brotli v1.0.4 // indirect
 	github.com/andybalholm/cascadia v1.2.0 // indirect
 	github.com/antchfx/htmlquery v1.2.3 // indirect
@@ -48,14 +49,15 @@ require (
 	github.com/goccy/go-json v0.9.11 // indirect
 	github.com/gocolly/colly v1.2.0 // indirect
 	github.com/gocolly/colly/v2 v2.1.0 // indirect
-	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
+	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/google/flatbuffers v2.0.8+incompatible // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
-	github.com/google/uuid v1.3.0 // indirect
-	github.com/googleapis/enterprise-certificate-proxy v0.2.3 // indirect
-	github.com/googleapis/gax-go/v2 v2.7.1 // indirect
+	github.com/google/s2a-go v0.1.7 // indirect
+	github.com/google/uuid v1.3.1 // indirect
+	github.com/googleapis/enterprise-certificate-proxy v0.3.1 // indirect
+	github.com/googleapis/gax-go/v2 v2.12.0 // indirect
 	github.com/gorilla/websocket v1.4.2 // indirect
 	github.com/hashicorp/go-retryablehttp v0.6.6 // indirect
 	github.com/imdario/mergo v0.3.9 // indirect
@@ -85,18 +87,18 @@ require (
 	go.opentelemetry.io/otel v0.18.0 // indirect
 	go.opentelemetry.io/otel/metric v0.18.0 // indirect
 	go.opentelemetry.io/otel/trace v0.18.0 // indirect
-	golang.org/x/crypto v0.11.0 // indirect
-	golang.org/x/mod v0.8.0 // indirect
-	golang.org/x/net v0.12.0 // indirect
-	golang.org/x/sync v0.1.0 // indirect
-	golang.org/x/text v0.11.0 // indirect
-	golang.org/x/tools v0.6.0 // indirect
+	golang.org/x/crypto v0.14.0 // indirect
+	golang.org/x/mod v0.10.0 // indirect
+	golang.org/x/net v0.16.0 // indirect
+	golang.org/x/sync v0.4.0 // indirect
+	golang.org/x/text v0.13.0 // indirect
+	golang.org/x/tools v0.9.1 // indirect
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
-	google.golang.org/appengine v1.6.7 // indirect
-	google.golang.org/genproto v0.0.0-20230525234025-438c736192d0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20230525234020-1aefcd67740a // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20230629202037-9506855d4529 // indirect
-	google.golang.org/grpc v1.56.1 // indirect
+	google.golang.org/appengine v1.6.8 // indirect
+	google.golang.org/genproto v0.0.0-20231002182017-d307bd883b97 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20231002182017-d307bd883b97 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20231002182017-d307bd883b97 // indirect
+	google.golang.org/grpc v1.58.2 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 )
