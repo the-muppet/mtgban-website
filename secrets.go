@@ -22,6 +22,7 @@ func initSecretClient(projectId string) error {
 func downloadSecret(projectID, secretID string) ([]byte, error) {
 
 	accessReq := fmt.Sprintf("projects/%s/secrets/%s/versions/latest", projectID, secretID)
+	log.Printf("Access Request for Secret: %s", accessReq)
 
 	result, err := SecretsClient.Projects.Secrets.Versions.Access(accessReq).Do()
 	if err != nil {
@@ -39,6 +40,8 @@ func downloadSecret(projectID, secretID string) ([]byte, error) {
 func addSecretVersion(projectID, secretID, payload string) error {
 
 	parent := fmt.Sprintf("projects/%s/secrets/%s", projectID, secretID)
+
+	log.Printf("Parent ID for adding new secret version: %s", parent)
 
 	encodedPayload := base64.StdEncoding.EncodeToString([]byte(payload))
 

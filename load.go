@@ -7,6 +7,7 @@ import (
 	"log"
 	"path"
 	"sort"
+	"strings"
 	"sync"
 	"time"
 
@@ -197,8 +198,13 @@ func downloadSeller(path string) (mtgban.Seller, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), DefaultUploaderTimeout)
 	defer cancel()
 
-	rc, err := GCSBucketClient.Bucket(Config.Uploader.BucketName).Object(path).NewReader(ctx)
+	log.Printf("Attempting to read from GCS path: %s", path)
+	actualPath := strings.TrimPrefix(path, fmt.Sprintf("gs://%s/", Config.Uploader.BucketName))
+
+	log.Printf("Actual path used for GCS Object: %s", actualPath)
+	rc, err := GCSBucketClient.Bucket(Config.Uploader.BucketName).Object(actualPath).NewReader(ctx)
 	if err != nil {
+		log.Printf("Error creating GCS reader: %s", err)
 		return nil, err
 	}
 	defer rc.Close()
