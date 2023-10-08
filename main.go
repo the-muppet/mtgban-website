@@ -26,6 +26,7 @@ import (
 	"golang.org/x/exp/slices"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/option"
+	"google.golang.org/api/secretmanager/v1"
 	"gopkg.in/Iwark/spreadsheet.v2"
 	cron "gopkg.in/robfig/cron.v2"
 
@@ -338,6 +339,12 @@ var Config struct {
 		BucketName     string `json:"bucket_name"`
 	} `json:"uploader"`
 
+	Secrets struct {
+		ProjectId string `json:"project_id"`
+		Sellers   string `json:"sellers_json"`
+		Vendors   string `json:"vendors_json"`
+	} `json:"secrets"`
+
 	/* The location of the configuation file */
 	filePath string
 }
@@ -370,6 +377,7 @@ var Newspaper1dayDB *sql.DB
 
 var GoogleDocsClient *http.Client
 var GCSBucketClient *storage.Client
+var SecretsClient *secretmanager.Service
 
 const (
 	DefaultConfigPort = "8080"
@@ -557,6 +565,12 @@ func main() {
 		log.Fatalln("unable to create necessary folders", err)
 	}
 	LogPages = map[string]*log.Logger{}
+
+	err = initSecretClient(Config.Secrets.ProjectId)
+	if err != nil {
+		log.Fatalf("failed to initialize secret client: %v", err)
+		return
+	}
 
 	GoogleDocsClient, err = loadGoogleCredentials(Config.GoogleCredentials)
 	if err != nil {
