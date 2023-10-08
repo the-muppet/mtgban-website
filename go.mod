@@ -3,7 +3,7 @@ module github.com/kodabb/mtgban-website
 go 1.19
 
 require (
-	cloud.google.com/go/bigquery v1.55.0
+	cloud.google.com/go/bigquery v1.56.0
 	cloud.google.com/go/storage v1.30.1
 	github.com/NYTimes/gziphandler v1.1.1
 	github.com/PuerkitoBio/goquery v1.6.1
@@ -38,6 +38,7 @@ require (
 	github.com/antchfx/xmlquery v1.3.5 // indirect
 	github.com/antchfx/xpath v1.1.11 // indirect
 	github.com/apache/arrow/go/v11 v11.0.0 // indirect
+	github.com/apache/arrow/go/v12 v12.0.0 // indirect
 	github.com/apache/thrift v0.16.0 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
