@@ -19,31 +19,31 @@ type ScraperConfig struct {
 	Path      string `json:"path"`
 }
 
-// Retrieve the list of Scrapers and their configuration
-func downloadScrapersConfig(path string) (map[string]*ScraperConfig, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), DefaultUploaderTimeout)
-	defer cancel()
-
-	rc, err := GCSBucketClient.Bucket(Config.Uploader.BucketName).Object(path).NewReader(ctx)
+// Retrieve list of Scrapers and their configuration from Secret Manager
+func downloadScrapersConfig(secretID string) (map[string]*ScraperConfig, error) {
+	secretData, err := downloadSecret(Config.Secrets.ProjectId, secretID)
 	if err != nil {
 		return nil, err
 	}
-	defer rc.Close()
 
 	var config map[string]*ScraperConfig
-	err = json.NewDecoder(rc).Decode(&config)
-	return config, err
+	err = json.Unmarshal(secretData, &config)
+	if err != nil {
+		return nil, err
+	}
+	return config, nil
 }
 
-func uploadScrapersConfig(config map[string]*ScraperConfig, path string) error {
-	ctx, cancel := context.WithTimeout(context.Background(), DefaultUploaderTimeout)
-	defer cancel()
+// create new secret version (update chosen config.json)
+func uploadScrapersConfig(config map[string]*ScraperConfig, secretID string) error {
+	configData, err := json.Marshal(config)
+	if err != nil {
+		return err
+	}
 
-	wc := GCSBucketClient.Bucket(Config.Uploader.BucketName).Object(path).NewWriter(ctx)
-	wc.ContentType = "application/json"
-	defer wc.Close()
+	configStr := string(configData)
 
-	return json.NewEncoder(wc).Encode(&config)
+	return addSecretVersion(Config.Secrets.ProjectId, secretID, configStr)
 }
 
 // Convert from map to a sorted array
@@ -76,13 +76,13 @@ func loadScrapersNG() error {
 
 	var err error
 	if SellersConfigMap == nil {
-		SellersConfigMap, err = downloadScrapersConfig("sellers.json")
+		SellersConfigMap, err = downloadScrapersConfig("sellers_json")
 		if err != nil {
 			return err
 		}
 	}
 	if VendorsConfigMap == nil {
-		VendorsConfigMap, err = downloadScrapersConfig("vendors.json")
+		VendorsConfigMap, err = downloadScrapersConfig("vendors_json")
 		if err != nil {
 			return err
 		}
