@@ -19,8 +19,7 @@ func initSecretClient(projectId string) error {
 	return nil
 }
 
-func downloadSecret(projectID, secretID string) ([]byte, error) {
-
+func accessSecret(projectID, secretID string) ([]byte, error) {
 	accessReq := fmt.Sprintf("projects/%s/secrets/%s/versions/latest", projectID, secretID)
 	log.Printf("Access Request for Secret: %s", accessReq)
 
@@ -33,11 +32,10 @@ func downloadSecret(projectID, secretID string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	return decodedData, nil
 }
 
-func addSecretVersion(projectID, secretID, payload string) error {
+func updateSecret(projectID, secretID, payload string) error {
 
 	parent := fmt.Sprintf("projects/%s/secrets/%s", projectID, secretID)
 

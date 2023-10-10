@@ -22,7 +22,7 @@ type ScraperConfig struct {
 
 // Retrieve list of Scrapers and their configuration from Secret Manager
 func downloadScrapersConfig(secretID string) (map[string]*ScraperConfig, error) {
-	secretData, err := downloadSecret(Config.Secrets.ProjectId, secretID)
+	secretData, err := accessSecret(Config.Secrets.ProjectId, secretID)
 	if err != nil {
 		return nil, err
 	}
@@ -44,7 +44,7 @@ func uploadScrapersConfig(config map[string]*ScraperConfig, secretID string) err
 
 	configStr := string(configData)
 
-	return addSecretVersion(Config.Secrets.ProjectId, secretID, configStr)
+	return updateSecret(Config.Secrets.ProjectId, secretID, configStr)
 }
 
 // Convert from map to a sorted array
