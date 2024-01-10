@@ -9,8 +9,9 @@ import (
 	"google.golang.org/api/secretmanager/v1"
 )
 
-func initSecretClient(projectId string) error {
-	ctx := context.Background()
+var SecretsClient *secretmanager.Service
+
+func initSecretClient(ctx context.Context, projectId string) error {
 	var err error
 	SecretsClient, err = secretmanager.NewService(ctx)
 	if err != nil {
@@ -19,12 +20,13 @@ func initSecretClient(projectId string) error {
 	return nil
 }
 
-func accessSecret(projectID, secretID string) ([]byte, error) {
+func accessSecret(ctx context.Context, projectID, secretID string) ([]byte, error) {
 	accessReq := fmt.Sprintf("projects/%s/secrets/%s/versions/latest", projectID, secretID)
 	log.Printf("Access Request for Secret: %s", accessReq)
 
-	result, err := SecretsClient.Projects.Secrets.Versions.Access(accessReq).Do()
+	result, err := SecretsClient.Projects.Secrets.Versions.Access(accessReq).Context(ctx).Do()
 	if err != nil {
+		log.Printf("failed to access secret: %v", err)
 		return nil, err
 	}
 
@@ -35,10 +37,8 @@ func accessSecret(projectID, secretID string) ([]byte, error) {
 	return decodedData, nil
 }
 
-func updateSecret(projectID, secretID, payload string) error {
-
+func updateSecret(ctx context.Context, projectID, secretID, payload string) error {
 	parent := fmt.Sprintf("projects/%s/secrets/%s", projectID, secretID)
-
 	log.Printf("Parent ID for adding new secret version: %s", parent)
 
 	encodedPayload := base64.StdEncoding.EncodeToString([]byte(payload))
@@ -49,7 +49,7 @@ func updateSecret(projectID, secretID, payload string) error {
 		},
 	}
 
-	_, err := SecretsClient.Projects.Secrets.AddVersion(parent, secretPayload).Do()
+	_, err := SecretsClient.Projects.Secrets.AddVersion(parent, secretPayload).Context(ctx).Do()
 	if err != nil {
 		log.Printf("failed to add secret version: %v", err)
 		return err
